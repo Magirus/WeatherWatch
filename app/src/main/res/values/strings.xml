@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">WeatherWatch</string>
+
+    <string name="gps_get_process">Пошук місцезнаходження...</string>
+    <string name="action_gps">Отримати координати GPS</string>
+    <string name="gps_message_title">GPS вимкнено</string>
+    <string name="gps_message">Для роботи програми потрібно увімкнути GPS. Бажаєте надавати своє місцезнаходження ?</string>
+    <string name="gps_message_yes">Ага</string>
+    <string name="gps_message_no">Нє</string>
+    <string name="permission_required">Не вистачає прав доступу</string>
+
+    <string name="openweather_key">37f1f794b0ac8fb95915d37704b42aeb</string>
+    <string name="forecastio_key">8d27a3e70acafdb05c3f6a3182cf9118</string>
+    <string name="wunderground_key">7ec37b33514aa418</string>
+
+    <string name="weather_sky_clear">Ясно, невелика хмарність</string>
+    <string name="weather_sky_clouds">Хмарно</string>
+    <string name="weather_sky_rainy">Дощ</string>
+    <string name="temperature_celcium">\u2103</string>
+
+    <string name="network_error">Джерело погоди %s недоступне. Перевірте підключення до інтернету.</string>
+
+    <string name="temperature_header">Температура</string>
+    <string name="pressure_header">Тиск</string>
+    <string name="humidity_header">Вологість</string>
+    <string name="pressure">\u0020мм</string>
+    <string name="wind_header">Швидкість вітру</string>
+    <string name="wind_speed">\u0020м/с</string>
+
+
+</resources>
