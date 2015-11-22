@@ -1,15 +1,17 @@
-package com.magirus.weatherwatch.util;
+package com.magirus.weatherwatch.adapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +27,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     private RecyclerView list;
     private CommonWeather weatherForecasts;
 
-    public ForecastListAdapter(final Activity context, final RecyclerView list,  final CommonWeather weatherForecasts) {
+    public ForecastListAdapter(final Activity context, final RecyclerView list, final CommonWeather weatherForecasts) {
         this.context = context;
         this.list = list;
         this.weatherForecasts = weatherForecasts;
@@ -43,17 +45,21 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView skyImage;
         public TextView date, skyText, temperature;
+        public Button detailBtn;
+
         public ViewHolder(View v) {
             super(v);
             skyImage = (ImageView) v.findViewById(R.id.sky_picture);
-            date= (TextView) v.findViewById(R.id.date);
+            date = (TextView) v.findViewById(R.id.date);
             skyText = (TextView) v.findViewById(R.id.sky_text);
             temperature = (TextView) v.findViewById(R.id.temperature);
+            detailBtn = (Button) v.findViewById(R.id.detail_btn);
+            v.setTag(this);
         }
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         CommonWeather.Forecast forecast = (CommonWeather.Forecast) getItem(position);
         if (forecast.sky == CommonWeather.CLEAR_SKY) {
             holder.skyImage.setImageDrawable(context.getResources().getDrawable(R.drawable.sky_clear));
@@ -74,6 +80,16 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
         Animation fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.weather_image);
         holder.skyImage.setAnimation(fadeInAnimation);
+        holder.detailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailedWeatherActivity.class);
+                intent.putExtra("location", weatherForecasts.location);
+                intent.putExtra("forecast", (CommonWeather.Forecast) getItem(position));
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.skyImage, "sky_image");
+                ActivityCompat.startActivity(context, intent, options.toBundle());
+            }
+        });
     }
 
     @Override
@@ -82,8 +98,10 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         Intent intent = new Intent(context, DetailedWeatherActivity.class);
         intent.putExtra("location", weatherForecasts.location);
         intent.putExtra("forecast", (CommonWeather.Forecast) getItem(position));
-        context.startActivity(intent);
-        context.overridePendingTransition(R.anim.details_activity_entire, R.anim.main_activity_out);
+        //context.startActivity(intent);
+        //context.overridePendingTransition(R.anim.details_activity_entire, R.anim.main_activity_out);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, ((ViewHolder) v.getTag()).skyImage, "sky_image");
+        ActivityCompat.startActivity(context, intent, options.toBundle());
     }
 
     @Override

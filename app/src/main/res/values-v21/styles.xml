@@ -6,7 +6,11 @@
         <item name="colorPrimaryDark">#1A6BF2</item>
         <item name="colorAccent">#4285F4</item>
         <item name="android:navigationBarColor">#4285F4</item>
-        <item name="android:textColorPrimary">#E3F2FB</item>
+        <item name="android:actionMenuTextColor">#000000</item>
+        <item name="titleTextColor">#E3F2FB</item>
+
+        <item name="android:windowContentTransitions">true</item>
+
     </style>
 
 </resources>

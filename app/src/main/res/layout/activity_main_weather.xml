@@ -1,24 +1,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#EEEEEE">
 
     <TextView
         android:id="@+id/location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:background="#EEEEEE"
+        android:elevation="1dp"
         android:gravity="center"
         android:textColor="@android:color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:elevation="10dp"/>
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_forecasts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/location">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_below="@id/location"></android.support.v7.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/gps_status_progress_container"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/pressed" android:drawable="@drawable/btn_pressed"
+        android:state_pressed="true"/>
+    <item android:id="@+id/def"
+        android:drawable="@drawable/btn_default"/>
+
+    <transition android:fromId="@id/def" android:toId="@+id/pressed">
+        <animation-list>
+            <item android:duration="30" android:drawable="@drawable/btn_transition1"/>
+            <item android:duration="30" android:drawable="@drawable/btn_transition2"/>
+            <item android:duration="30" android:drawable="@drawable/btn_transition1"/>
+            <item android:duration="30" android:drawable="@drawable/btn_transition2"/>
+            <item android:duration="30" android:drawable="@drawable/btn_transition1"/>
+            <item android:duration="30" android:drawable="@drawable/btn_transition2"/>
+            <item android:duration="30" android:drawable="@drawable/btn_transition1"/>
+            <item android:duration="30" android:drawable="@drawable/btn_transition2"/>
+        </animation-list>
+    </transition>
+</animated-selector>

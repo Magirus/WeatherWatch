@@ -7,19 +7,29 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.magirus.weatherwatch.BuildConfig;
 import com.magirus.weatherwatch.DAO.WeatherDAO;
 import com.magirus.weatherwatch.R;
 import com.magirus.weatherwatch.bean.CommonWeather;
@@ -28,7 +38,9 @@ import com.magirus.weatherwatch.bean.OpenWeather;
 import com.magirus.weatherwatch.bean.WundergroundWeather;
 import com.magirus.weatherwatch.util.Agregator;
 import com.magirus.weatherwatch.util.GpsUtils;
-import com.magirus.weatherwatch.util.ForecastListAdapter;
+import com.magirus.weatherwatch.adapter.ForecastListAdapter;
+
+import java.util.concurrent.TransferQueue;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -62,14 +74,27 @@ public class MainWeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
+        setupWindowAnimations();
         layoutManager = new LinearLayoutManager(instance);
         setContentView(R.layout.activity_main_weather);
         gpsStatusProgressLayout = (LinearLayout) findViewById(R.id.gps_status_progress_container);
         forecastsList = (RecyclerView) findViewById(R.id.list_forecasts);
         forecastsList.setHasFixedSize(true);
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        forecastsList.setItemAnimator(itemAnimator);
         locationTxt = (TextView) findViewById(R.id.location);
         utils = new GpsUtils(this);
         locationListener = new LocationListenerCallback();
+    }
+
+    private void setupWindowAnimations() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Transition slideTransition = TransitionInflater.from(this).inflateTransition(R.transition.slide);
+            Transition slideTransitionReenter = TransitionInflater.from(this).inflateTransition(R.transition.slide);
+            slideTransitionReenter.setInterpolator(new FastOutSlowInInterpolator());
+            getWindow().setReenterTransition(slideTransitionReenter);
+            getWindow().setExitTransition(slideTransition);
+        }
     }
 
     @Override
